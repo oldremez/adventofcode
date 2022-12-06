@@ -11,9 +11,12 @@ pub fn run() {
         for line in lines {
             if let Ok(cal) = line {
                 let re = Regex::new(r"(\d+)-(\d+),(\d+)-(\d+)").unwrap();
-                let values = re.captures_iter(cal.as_str()).map(|x| x.as_str().parse::<i32>().unwrap()).collect();
+                let values = re.captures_iter(cal.as_str()).next().unwrap();
+                let vvv: Vec<i32> = values.iter().skip(1).map(|x| x.unwrap().as_str().parse::<i32>().unwrap()).collect();
 
-                println!("Month: {} Day: {} Year: {}", &values[2], &values[3], &values[1]);
+                if (vvv[0]>=vvv[2] && vvv[1]<=vvv[3]) || (vvv[0]<=vvv[2] && vvv[1]>=vvv[3]) {
+                    current_sum+=1;
+                }
             }
         }
     }
